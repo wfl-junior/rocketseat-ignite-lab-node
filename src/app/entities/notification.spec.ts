@@ -3,22 +3,22 @@ import { NotificationContent } from "./notification-content";
 
 describe("Notification", () => {
   it("should be able to create a notification content", async () => {
-    const content = new Notification({
+    const notification = new Notification({
       content: new NotificationContent("Nova solicitação de amizade!"),
       category: "social",
       recipientId: "example-recipient-id",
     });
 
-    expect(content).toBeInstanceOf(Notification);
+    expect(notification).toBeInstanceOf(Notification);
   });
 
-  it("should return props when accessing as json", async () => {
-    const content = new Notification({
+  it("should return props and with when accessing as json", async () => {
+    const notification = new Notification({
       content: new NotificationContent("Nova solicitação de amizade!"),
       category: "social",
       recipientId: "example-recipient-id",
     });
 
-    expect(content.toJSON()).toBe(content.props);
+    expect(notification.toJSON()).toBe(notification.props);
   });
 });

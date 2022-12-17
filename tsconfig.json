@@ -22,9 +22,10 @@
     "noUnusedParameters": true,
     "isolatedModules": true,
     "strictPropertyInitialization": false,
+    "resolveJsonModule": true,
     "paths": {
       "~/*": ["./*"]
     }
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "prisma"]
 }

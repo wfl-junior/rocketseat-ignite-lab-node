@@ -20,7 +20,7 @@ export class NotificationContent {
   }
 
   public toJSON() {
-    return this.toString();
+    return this.value;
   }
 
   private validateLength(content: string): boolean {

@@ -1,9 +1,13 @@
 import { BadRequestException, ValidationPipe } from "@nestjs/common";
-import { NestFactory } from "@nestjs/core";
+import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
+import { AllExceptionsFilter } from "./infra/http/exceptions/all-exceptions-filter";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const httpAdapterHost = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new AllExceptionsFilter(httpAdapterHost));
 
   app.useGlobalPipes(
     new ValidationPipe({

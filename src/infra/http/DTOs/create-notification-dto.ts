@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsUUID, Length } from "class-validator";
+import type { SendNotificationRequest } from "~/src/app/use-cases/send-notification";
 
-export class CreateNotificationDTO {
+export class CreateNotificationDTO implements SendNotificationRequest {
   @IsNotEmpty()
   @IsUUID(4)
   recipientId: string;

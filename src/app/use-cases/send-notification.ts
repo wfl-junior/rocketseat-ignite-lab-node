@@ -3,7 +3,7 @@ import { Notification } from "../entities/notification";
 import { NotificationContent } from "../entities/notification-content";
 import { NotificationsRepository } from "../repositories/notifications-repository";
 
-interface SendNotificationRequest {
+export interface SendNotificationRequest {
   recipientId: string;
   content: string;
   category: string;
@@ -15,7 +15,9 @@ interface SendNotificationResponse {
 
 @Injectable()
 export class SendNotification {
-  constructor(private notificationsRepository: NotificationsRepository) {}
+  constructor(
+    private readonly notificationsRepository: NotificationsRepository,
+  ) {}
 
   async execute(
     request: SendNotificationRequest,

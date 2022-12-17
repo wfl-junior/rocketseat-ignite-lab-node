@@ -3,33 +3,41 @@ import type { Replace } from "~/src/helpers/replace";
 import { NotificationContent } from "./notification-content";
 
 export interface NotificationProps {
+  id: string;
   recipientId: string;
   content: NotificationContent;
   category: string;
   readAt: Date | null;
+  canceledAt: Date | null;
   createdAt: Date;
 }
 
+type NewNotificationProps = Replace<
+  NotificationProps,
+  Partial<Pick<NotificationProps, "createdAt" | "readAt" | "canceledAt" | "id">>
+>;
+
 export class Notification {
-  readonly #id: string;
   readonly #props: NotificationProps;
 
   constructor({
-    createdAt = new Date(),
+    id = randomUUID(),
     readAt = null,
+    canceledAt = null,
+    createdAt = new Date(),
     ...props
-  }: Replace<NotificationProps, { createdAt?: Date; readAt?: Date | null }>) {
-    this.#id = randomUUID();
-
+  }: NewNotificationProps) {
     this.#props = {
       ...props,
+      id,
       readAt,
+      canceledAt,
       createdAt,
     };
   }
 
   public get id() {
-    return this.#id;
+    return this.#props.id;
   }
 
   public get props() {
@@ -64,8 +72,20 @@ export class Notification {
     return this.#props.readAt;
   }
 
-  public set readAt(readAt: NotificationProps["readAt"]) {
-    this.#props.readAt = readAt;
+  public read() {
+    this.#props.readAt = new Date();
+  }
+
+  public unread() {
+    this.#props.readAt = null;
+  }
+
+  public get canceledAt() {
+    return this.#props.canceledAt;
+  }
+
+  public cancel() {
+    this.#props.canceledAt = new Date();
   }
 
   public get createdAt() {

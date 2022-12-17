@@ -1,7 +1,6 @@
-import type { Prisma } from "@prisma/client";
 import { IsNotEmpty, IsUUID, Length } from "class-validator";
 
-export class CreateNotificationBody implements Prisma.NotificationCreateInput {
+export class CreateNotificationDTO {
   @IsNotEmpty()
   @IsUUID(4)
   recipientId: string;

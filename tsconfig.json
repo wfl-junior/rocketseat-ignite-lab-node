@@ -23,8 +23,8 @@
     "isolatedModules": true,
     "strictPropertyInitialization": false,
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "test"]
 }

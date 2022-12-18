@@ -1,7 +1,9 @@
 import { BadRequestException, ValidationPipe } from "@nestjs/common";
 import { HttpAdapterHost, NestFactory } from "@nestjs/core";
+import { MicroserviceOptions } from "@nestjs/microservices";
 import { AppModule } from "./app.module";
 import { AllExceptionsFilter } from "./infra/http/exceptions/all-exceptions-filter";
+import { KafkaConsumerService } from "./infra/messaging/kafka/kafka-consumer.service";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,6 +13,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
+      whitelist: true,
       exceptionFactory: validationErrors => {
         return new BadRequestException({
           ok: false,
@@ -29,6 +32,12 @@ async function bootstrap() {
     }),
   );
 
+  const kafkaConsumerService = app.get(KafkaConsumerService);
+  app.connectMicroservice<MicroserviceOptions>({
+    strategy: kafkaConsumerService,
+  });
+
+  await app.startAllMicroservices();
   await app.listen(3000);
 }
 

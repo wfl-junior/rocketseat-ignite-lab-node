@@ -21,14 +21,10 @@ export class NotificationsController {
   ) {}
 
   @Post()
-  async create(@Body() body: CreateNotificationDTO) {
-    const { recipientId, content, category } = body;
-
-    const { notification } = await this.sendNotification.execute({
-      recipientId,
-      content,
-      category,
-    });
+  async create(@Body() newNotificationBody: CreateNotificationDTO) {
+    const { notification } = await this.sendNotification.execute(
+      newNotificationBody,
+    );
 
     return {
       ok: true,

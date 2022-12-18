@@ -4,9 +4,9 @@ import { NotificationContent } from "../entities/notification-content";
 import { NotificationsRepository } from "../repositories/notifications-repository";
 
 export interface SendNotificationRequest {
-  recipientId: string;
   content: string;
   category: string;
+  recipientId: string;
 }
 
 interface SendNotificationResponse {
